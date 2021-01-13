@@ -25,55 +25,17 @@
 
                 @if($posts->count())
                     @foreach ($posts as $post)
-                        <div class="mb-4">
-                            <a href="" class="font-bold">{{ $post->user->name }}</a> <span class="text-grey-600 text-sm">{{ $post->created_at->diffForHumans() }}</span>
-                            
-                            <p class="mb-2">{{ $post->body }}</p>
+                        
+                        <x-post :post="$post"/>
 
-                            
-                            @can('delete', $post)
-                                <form action="{{ route('posts.destroy', $post) }}" class="mr-1" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-blue-500">Delete</button>
-                                </form>
-                            @endcan
-
-                            <div class="flex item-center">
-
-                                @auth
-                                    @if (!$post->likedBy(auth()->user()))
-
-                                        <form action="{{ route('posts.likes', $post) }}" class="mr-1" method="post">
-                                            @csrf
-                                            <button type="submit" class="text-blue-500">Like</button>
-                                        </form>
-
-                                    @else 
-
-                                    
-                                        <form action="{{ route('posts.likes', $post) }}" class="mr-1" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-blue-500">Unlike</button>
-                                        </form>
-
-                                    @endif  
-
-                                @endauth
-
-                                <span>{{ $post->likes->count() }} {{ Str::plural('like', $post->likes->count()) }}</span>
-
-                            </div>
-
-                        </div>
                     @endforeach
                     <!-- tailwind automatically style this -->
                     {{ $posts->links() }}
                     <!-- end of autostyle  -->
                 @else
-                    <p>There is no posts</p>
+                    <p>There is no post</p>
                 @endif
+
         </div>       
     </div>
 @endsection
