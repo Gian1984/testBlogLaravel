@@ -2,7 +2,19 @@
 
 @section('content')
     <div class="flex justify-center">
-        <div class="w-8/12 bg-white p-6 rounded-lg">
+        <div class="w-8/12 bg-white p-6 m-2 rounded-lg">
+            <h1 class="text-2xl font-medium mb-1">
+                NASA's Astronomy Picture of the Day
+            </h1>
+            <h2 id="title"></h2>
+            <p id="date" class="mb-4"></p>
+            <section class="picture-explanation-container">
+                <img src="" id="picture" alt="astronomy image by NASA" />
+
+            </section>
+            <p id="explanation" class="mt-4"></p>
+        </div>
+        <div class="w-8/12 bg-white p-6 m-2 rounded-lg">
                 @auth
                 <form action="{{ route('posts') }}" method="post" class="mb-4">
                 @csrf
@@ -38,6 +50,19 @@
 
         </div>       
     </div>
+   
+    <script>
+
+    fetch("https://api.nasa.gov/planetary/apod?api_key=YQcvCrtT07JREAmVX12qSDBfrytYf6pe4hEvlO90")
+    .then(response => response.json())
+    .then((data) => {
+        document.getElementById('title').textContent = data.title
+        document.getElementById('date').textContent = data.date
+        document.getElementById('picture').src = data.hdurl
+        document.getElementById('explanation').textContent = data.explanation
+    })
+
+    </script>
 @endsection
 
 
